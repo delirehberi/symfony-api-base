@@ -1,0 +1,19 @@
+crud:
+    resource: "@CrudBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core:
+    resource: "@CoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
