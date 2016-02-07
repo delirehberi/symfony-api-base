@@ -20,7 +20,9 @@ class DefaultController extends BaseController
      */
     public function dashboardAction()
     {
-        return $this->success(["Durum" => "Naber"]);
+        return $this->success(
+            ["Durum" => "Naber",'user'=>$this->getUser()->getUsername()]
+        );
     }
 
     /**

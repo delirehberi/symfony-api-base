@@ -25,7 +25,6 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        // loadfromdb
         $userRepo = $this->em->getRepository("UserBundle:User");
         $user = $userRepo->getUser($username);
 

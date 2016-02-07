@@ -1,12 +1,10 @@
 services:
-  controller.user.default:
-    class: UserBundle\Controller\DefaultController
-    arguments: ['@service_container']
   controller.user.security:
     class: UserBundle\Controller\SecurityController
     arguments: ['@service_container']
   user_provider:
     class: UserBundle\Provider\UserProvider
+    arguments: ['@doctrine.orm.entity_manager']
   jwt_authenticator:
     class: UserBundle\Authenticator\JwtAuthenticator
     arguments: ["@doctrine.orm.entity_manager","@lexik_jwt_authentication.encoder"]

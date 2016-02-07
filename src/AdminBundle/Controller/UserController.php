@@ -1,6 +1,13 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: emreyilmaz
+ * Date: 7.02.2016
+ * Time: 21:46
+ */
 
-namespace UserBundle\Controller;
+namespace AdminBundle\Controller;
+
 
 use CrudBundle\Controller\CrudController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -9,12 +16,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use UserBundle\Entity\User;
 
 /**
- * Class DefaultController
- * @package UserBundle\Controller
- * @Route(path="/user",service="controller.user.default")
+ * Class UserController
+ * @package AdminBundle\Controller
+ * @Route(service="controller.admin.user",path="/user")
  */
-class DefaultController extends CrudController
+class UserController extends CrudController
 {
+    /**
+     * @Route("/me",methods={"GET"})
+     */
+    public function meAction()
+    {
+        $user = $this->getUser();
+        return $this->getAction($user->getId());
+    }
+
     /**
      * @inheritdoc
      */

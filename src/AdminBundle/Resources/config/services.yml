@@ -2,3 +2,6 @@ services:
 #    admin.example:
 #        class: AdminBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+  controller.admin.user:
+    class: AdminBundle\Controller\UserController
+    arguments: ['@service_container']

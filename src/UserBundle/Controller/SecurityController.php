@@ -54,6 +54,10 @@ class SecurityController extends BaseController
 
         $token = $this->container->get('lexik_jwt_authentication.encoder')
             ->encode(['username' => $user->getUsername()]);
+        //addrole admin for test.
+        //$user->setRoles(['ROLE_ADMIN','ROLE_USER']);
+        ///$this->em->persist($user);
+        //$this->em->flush();
         return $this->success([
             'token' => $token
         ]);
