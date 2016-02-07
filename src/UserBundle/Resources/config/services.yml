@@ -1,7 +1,12 @@
 services:
-#    user.example:
-#        class: UserBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
   controller.user.default:
     class: UserBundle\Controller\DefaultController
-    arguments: ['@request_stack','@doctrine.orm.default_entity_manager','@serializer']
+    arguments: ['@service_container']
+  controller.user.security:
+    class: UserBundle\Controller\SecurityController
+    arguments: ['@service_container']
+  user_provider:
+    class: UserBundle\Provider\UserProvider
+  jwt_authenticator:
+    class: UserBundle\Authenticator\JwtAuthenticator
+    arguments: ["@doctrine.orm.entity_manager","@lexik_jwt_authentication.encoder"]

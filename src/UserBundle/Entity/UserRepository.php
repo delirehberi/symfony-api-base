@@ -12,5 +12,19 @@ use CrudBundle\Entity\CrudRepository;
 
 class UserRepository extends CrudRepository
 {
+    /**
+     * @param $username
+     * @return User|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getUser($username)
+    {
+        $qb = $this->createQueryBuilder("u");
+        $qb->where(
+            $qb->expr()->eq("u.email", ':username')
+        )
+            ->setParameter('username', $username);
 
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

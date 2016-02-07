@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -23,19 +24,20 @@ abstract class BaseController extends Controller
     private $jsonResponse;
     /** @var RequestStack */
     protected $requestStack;
+    /** @var ContainerInterface */
+    protected $container;
 
     /**
      * DefaultController constructor.
-     * @param RequestStack $requestStack
-     * @param EntityManager $entityManager
-     * @param SerializerInterface $serializer
+     * @param ContainerInterface $container
      */
-    public function __construct(RequestStack $requestStack, EntityManager $entityManager, SerializerInterface $serializer)
+    public function __construct(ContainerInterface $container)
     {
-        $this->em = $entityManager;
-        $this->serializer = $serializer;
+        $this->container = $container;
+        $this->em = $this->container->get('doctrine.orm.entity_manager');
+        $this->serializer = $this->container->get('jms_serializer');
         $this->jsonResponse = new JsonResponse();
-        $this->requestStack = $requestStack;
+        $this->requestStack = $this->container->get('request_stack');
     }
 
     /**

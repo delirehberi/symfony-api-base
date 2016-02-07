@@ -2,3 +2,6 @@ services:
 #    core.example:
 #        class: CoreBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+  controller.admin.default:
+    class: AdminBundle\Controller\DefaultController
+    arguments: ['@service_container']

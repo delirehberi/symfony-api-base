@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\AccessType;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class User
@@ -21,8 +22,13 @@ use JMS\Serializer\Annotation\Expose;
  * @ORM\Entity(repositoryClass="UserBundle\Entity\UserRepository")
  * @ExclusionPolicy("all")
  */
-class User
+class User implements UserInterface
 {
+    public function __construct()
+    {
+        $this->refreshSalt();
+    }
+
     use TimeStampableTrait;
     /**
      * @var string
@@ -63,6 +69,19 @@ class User
      * @Expose
      */
     protected $password;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=true)
+     * @Expose
+     */
+    protected $roles;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $salt;
 
     /**
      * @return string
@@ -170,6 +189,53 @@ class User
     {
         $this->password = $password;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function refreshSalt()
+    {
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
 
 
