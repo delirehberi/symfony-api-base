@@ -19,3 +19,9 @@ composer install
 openssl genrsa -out var/jwt/private.pem -aes256 4096
 openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 ```
+
+### 3- Schema update
+
+```
+./var/bin doctrine:schema:update --force
+```
